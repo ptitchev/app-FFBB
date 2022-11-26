@@ -1,26 +1,44 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import Search from './Search.js'
+// import Map from './Map.js'
+import SimpleMap from './Map.js'
+// import Navbar from './Navbar.js';
+import bg from "./img/bg3.jpg";
 
-class App extends React.Component {
+const App = () => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-        day: ""
-    };
-  }
+  // const mapIsReadyCallback = (map) => {
+  //   console.log(map);
+  // };
 
-  async componentDidMount() {
-      const res = await fetch('http://127.0.0.1:8000/api/day')
-      const res_json = await res.json()
-      console.log(res_json)
-      this.setState({'day': res_json})
-  }
-  
+  const [loc, setLoc] = useState("");
 
-  render() {
-    return <h1 className="text-xl font-medium text-yellow">Hey!  It's {this.state.day}</h1>;
-  }
+    useEffect(() => {
+        const url = "http://127.0.0.1:8000/api/day";
 
-}
+        const fetchData = async () => {
+            try {
+                const res = await fetch(url);
+                const res_json = await res.json();
+                setLoc(res_json);
+            } catch (error) {
+                console.log("error", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    return (
+      <div className="bg-scroll bg-center bg-cover content-center space-y-16" style={{backgroundImage: `url(${bg})`}}>
+
+          <Search/>
+          <SimpleMap></SimpleMap>
+
+      </div>
+      
+    );
+
+};
 
 export default App;
