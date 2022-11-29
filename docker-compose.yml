@@ -5,7 +5,7 @@ services:
     command: uvicorn app.main:app --root-path /api --proxy-headers --host 0.0.0.0 --port 8000
     restart: always
     ports:
-      - "8000:8000"
+      - "3001:8000"
     expose:
       - 8000
 
@@ -16,3 +16,15 @@ services:
       - "3000:3000"
     expose:
       - 3000
+
+  database:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ffbb
+      POSTGRES_USER: ffbb
+      POSTGRES_DB: ffbb
+    expose:
+      - 5432

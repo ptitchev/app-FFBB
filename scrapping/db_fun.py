@@ -1,4 +1,4 @@
-#db_fun.py --> fonction de création et de mise a jour de la base
+# db_fun.py --> fonction de création et de mise a jour de la base
 
 from db_log.form_log import log_info
 from scrap.scrap import *
@@ -15,51 +15,51 @@ for i in range(size):
         key = 0
         while key == 0:
             try:
-                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+                # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
                 key = asyncio.run(recup_div_key(L_div_urls[i]))
-            except :
-                print('fail - restart (' + str(i+1) + '/' + str(size) + ')')
+            except Exception as e:
+                print('fail - restart (' + str(i + 1) + '/' + str(size) + ')')
+                print(e)
         L_div_keys.append(key)
-    else :
+    else:
         L_div_keys.append(False)
 
 print('1 - clés récupérées')
 
-
-L_div_poules =[]
+L_div_poules = []
 for i in range(len(L_div)):
-    if L_div_keys[i] :
+    if L_div_keys[i]:
         L_div_poules.append(recup_poules(L_div_urls[i]))
-    else :
+    else:
         L_div_poules.append(False)
 
 L_div_nb_journees = []
 for i in range(len(L_div)):
 
-    if L_div_keys[i] :
+    if L_div_keys[i]:
         L_poule_nb_journees = []
-        
+
         for j in range(len(L_div_poules[i])):
-            key = hexa_sum(L_div_keys[i][:-5],j)+'.html'
-            L_poule_nb_journees.append(recup_nb_journee(key, url_start = url_start))
-            
-    else :
-       L_poule_nb_journees = False
+            key = hexa_sum(L_div_keys[i][:-5], j) + '.html'
+            L_poule_nb_journees.append(recup_nb_journee(key, url_start=url_start))
+
+    else:
+        L_poule_nb_journees = False
     L_div_nb_journees.append(L_poule_nb_journees)
 
 L_div_classement = []
 for i in range(len(L_div)):
 
-    if L_div_keys[i] :
+    if L_div_keys[i]:
         L_poule_classement = []
-        
+
         for j in range(len(L_div_poules[i])):
-            key = hexa_sum(L_div_keys[i][:-5],j)+'.html'
-            L_poule_classement.append(recup_classement(key, url_start = url_start))
-            
-    else :
+            key = hexa_sum(L_div_keys[i][:-5], j) + '.html'
+            L_poule_classement.append(recup_classement(key, url_start=url_start))
+
+    else:
         L_poule_classement = False
-       
+
     L_div_classement.append(L_poule_classement)
 
 L_div_all_journees = []
@@ -67,31 +67,30 @@ L_div_all_journees = []
 L_gym_key = []
 
 for i in range(len(L_div)):
-    
-    if L_div_keys[i] :
-        
+
+    if L_div_keys[i]:
+
         L_poule_all_journees = []
 
         for j in range(len(L_div_poules[i])):
-            
-            key = hexa_sum(L_div_keys[i][:-5],j)+'.html'
+
+            key = hexa_sum(L_div_keys[i][:-5], j) + '.html'
             L_poule_journees = []
             for k in range(L_div_nb_journees[i][j]):
-                
+
                 L_poule_journees.append(recup_result_journee(key, k + 1))
 
-                for match in L_poule_journees[0] :
+                for match in L_poule_journees[0]:
                     key_gym = match[-1]
 
-                    if key_gym not in L_gym_key :
-
+                    if key_gym not in L_gym_key:
                         L_gym_key.append(key_gym)
 
             L_poule_all_journees.append(L_poule_journees)
 
-    else :
-       L_poule_all_journees = False
-       
+    else:
+        L_poule_all_journees = False
+
     L_div_all_journees.append(L_poule_all_journees)
 
 print('2 - données récupérées')
@@ -99,26 +98,26 @@ print('2 - données récupérées')
 LT_div = []
 
 for i in range(len(L_div)):
-    if L_div_poules[i] :  
+    if L_div_poules[i]:
         div = [i, L_div[i], L_div_urls[i], L_div_keys[i], "etat"]
         LT_div.append(div)
 
 LT_poule = []
 
 for i in range(len(L_div)):
-    if L_div_poules[i] : 
+    if L_div_poules[i]:
         for j in range(len(L_div_poules[i])):
-            poule = [str(i) + str(j), i,  L_div_poules[i][j], L_div_nb_journees[i][j],"etat"]
+            poule = [str(i) + str(j), i, L_div_poules[i][j], L_div_nb_journees[i][j], "etat"]
             LT_poule.append(poule)
 
 LT_match = []
 
 for i in range(len(L_div)):
-    if L_div_poules[i] : 
+    if L_div_poules[i]:
         for j in range(len(L_div_poules[i])):
             for k in range(len(L_div_all_journees[i][j])):
                 for l in range(len(L_div_all_journees[i][j][k])):
-                    match =  L_div_all_journees[i][j][k][l] + [str(i) + str(j), k + 1]
+                    match = L_div_all_journees[i][j][k][l] + [str(i) + str(j), k + 1]
                     LT_match.append(match)
 
 LT_gymnase = []
@@ -129,10 +128,11 @@ for key_g in L_gym_key:
 LT_equipe = []
 
 for i in range(len(L_div)):
-    if L_div_poules[i] : 
+    if L_div_poules[i]:
         for j in range(len(L_div_poules[i])):
             for k in range(len(L_div_classement[i][j])):
-                equipe = [str(i) + str(j) + str(k), str(i) + str(j), k + 1] + L_div_classement[i][j][k] + L_div_all_journees[1][0][0][0]
+                equipe = [str(i) + str(j) + str(k), str(i) + str(j), k + 1] + L_div_classement[i][j][k] + \
+                         L_div_all_journees[1][0][0][0]
                 LT_equipe.append(equipe)
 
 print('3 - données nettoyées')

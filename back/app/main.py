@@ -2,7 +2,8 @@ from typing import Optional
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
-from .schemas import MatchRequest
+from .schemas import request
+
 # from .. import Auth
 
 
@@ -26,6 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/api/day", tags=["Dates"])
 def get_day_of_week():
     """
@@ -33,7 +35,7 @@ def get_day_of_week():
     """
     return datetime.now().strftime("%A")
 
-@app.post("/api/request")
-async def send_to_front(matchRequest : MatchRequest):
-    return ""
 
+@app.post("/api/request")
+async def send_to_front(matchRequest: request.MatchRequest):
+    return ""

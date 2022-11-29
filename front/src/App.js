@@ -17,7 +17,7 @@ const App = () => {
   const [date, setDate] = useState(Date.now());
 
     useEffect(() => {
-        const url = "http://127.0.0.1:8000/api/day";
+        const url = "http://127.0.0.1:3001/api/request";
 
         const fetchData = async () => {
             try {
