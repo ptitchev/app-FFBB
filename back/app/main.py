@@ -2,7 +2,9 @@ from typing import Optional
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
+from .schemas import MatchRequest
 # from .. import Auth
+
 
 app = FastAPI(
     title="App_ffbb",
@@ -31,5 +33,7 @@ def get_day_of_week():
     """
     return datetime.now().strftime("%A")
 
-
+@app.post("/api/request")
+async def send_to_front(matchRequest : MatchRequest):
+    return ""
 

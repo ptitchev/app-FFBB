@@ -20,7 +20,7 @@ $:~/> cd <WORKDIR>
 $:~/<WORKDIR> > git clone https://github.com/ptitchev/app-FFBB.git
 $:~/<WORKDIR> > cd app-FFBB/
 ```
-
+Il suffit ensuite de ce rendre sur l'adresse suivante [http://localhost:3000/](http://localhost:3000/) pour lancer l'application.
 <br>
 
 ### **Lancement du projet**
@@ -32,11 +32,14 @@ $:~/> cd <WORKDIR>
 $:~/<WORKDIR> > cd app-FFBB/
 $:~/app-FFBB > docker-compose up
 ```
+
+Il suffit ensuite de ce rendre sur l'adresse suivante [http://localhost:3000/](http://localhost:3000/) pour lancer l'application.
+
 <br>
 
-### **Fonctionnement du dashboard**
+### **Fonctionnement de l'application**
 
-L'application web est composé d'une barre de recherche où nous pouvons entrer une localisation et une date. En appuyant sur search, la map affichera les matchs présents autours de la localisation.
+L'application web est composé d'une barre de recherche où nous pouvons entrer une localisation et une date. En appuyant sur search, la map affichera les matchs présents autours de la localisation. Ces matchs seront représentés par des markers.
 
 <br>
 
