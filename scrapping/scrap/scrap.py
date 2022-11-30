@@ -1,6 +1,6 @@
 import requests
 import asyncio
-from requests_html import AsyncHTMLSession, HTML
+from requests_html import HTMLSession, HTML
 import time
 
 url_start = 'https://resultats.ffbb.com/'
