@@ -29,6 +29,7 @@ def recup_div(
 
     r = requests.get(url_start + 'menu.html')
     r_text = r.content.decode("utf-8")
+    r.close()
 
     L = r_text.split('</a>')  # Liste de transit pour recupérer les url --> string "url NOM_CHAMP"
 
@@ -71,11 +72,13 @@ def recup_div(
     return L_div, L_div_urls, L_div_types
 
 
-async def recup_div_key(url_champ0):
-    session = AsyncHTMLSession()
-    r = await session.get(url_champ0)
-    await r.html.arender(timeout=10)
+def recup_div_key(url_champ0):
+    session = HTMLSession()
+    r = session.get(url_champ0)
+    r.html.render()
     r_text = r.html.raw_html
+    r.close()
+    session.close()
     r_text = r_text.decode("utf-8")
 
     key = r_text[r_text.find("idIframeJournee") + 15:]
@@ -88,6 +91,7 @@ async def recup_div_key(url_champ0):
 def recup_poules(url_champ0):  # recupère les différentes poules d'une division
     r = requests.get(url_champ0)
     r_text = r.content.decode("utf-8")
+    r.close()
 
     text = r_text[r_text.find('<td id="idTableCoupeChampionnat">') + 33:]
 
@@ -127,6 +131,7 @@ def recup_nb_journee(key, url_start=url_start):  # recupere le nb de journée d'
 
     r = requests.get(url_journee)
     r_text = r.content.decode("utf-8")
+    r.close()
 
     nb_journee = r_text[r_text.rfind('javascript:openJournee'):]
     nb_journee = nb_journee[nb_journee.find('">') + 2:]
@@ -150,6 +155,7 @@ def recup_classement(key, url_start=url_start):  # recupère le classement de to
     url_classement = url_start + "championnat/classements/" + key
     r = requests.get(url_classement)
     r_text = r.content.decode("utf-8")
+    r.close()
     i_tab = r_text.find('<table class="liste"')
     r_tab = r_text[i_tab + len('<table class="liste"'):]
     L_classement = r_tab.split('class="tableau">')
@@ -191,6 +197,7 @@ def recup_result_journee(key, nb_j, url_start=url_start):  #
 
     r = requests.get(url_journee)
     r_text = r.content.decode("utf-8")
+    r.close()
     i_tab = r_text.find('<table class="liste"')
     r_tab = r_text[i_tab + len('<table class="liste"'):]
     L_div_matchs = r_tab.split('altern-2">')
@@ -206,6 +213,7 @@ def recup_gymnase(key_g):
 
     r = requests.get(url)
     r_text = r.content.decode("utf-8")
+    r.close()
     i_deb = r_text.find("cartoFbi={") + 10
     i_fin = r_text.find(',"errors":[]}')
     r_text = r_text[i_deb: i_fin]
