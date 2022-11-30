@@ -51,6 +51,8 @@ const App = () => {
   //     body: JSON.stringify({
   //       loc: loc,
   //       date: date,
+  //       lat: lat,
+  //       lng: lng,
   //     }),
 
   // }) 

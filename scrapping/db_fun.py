@@ -13,15 +13,17 @@ size = len(L_div)
 for i in range(size):
     if L_div_types[i] == 0:
         key = 0
-        while key == 0:
+        c = 0 
+        while (key == 0) and (c < 10):
             try:
                 key = recup_div_key(L_div_urls[i])
-            except Exception as e:
-                print('fail - restart (' + str(i + 1) + '/' + str(size) + ')')
+            except :
+                print('fail - restart (' + str(i+1) + '/' + str(size) + ')')
         L_div_keys.append(key)
-    else:
+        if c > 10 :
+            print("after 10 consecutive fails, execution stoped")
+    else :
         L_div_keys.append(False)
-
 print('1 - clés récupérées')
 
 L_div_poules = []
