@@ -15,11 +15,9 @@ for i in range(size):
         key = 0
         while key == 0:
             try:
-                # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-                key = asyncio.run(recup_div_key(L_div_urls[i]))
+                key = recup_div_key(L_div_urls[i])
             except Exception as e:
                 print('fail - restart (' + str(i + 1) + '/' + str(size) + ')')
-                print(e)
         L_div_keys.append(key)
     else:
         L_div_keys.append(False)
