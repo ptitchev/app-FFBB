@@ -17,14 +17,14 @@ services:
     expose:
       - 3000
 
-  database:
-    image: postgres
-    restart: always
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_PASSWORD: ffbb
-      POSTGRES_USER: ffbb
-      POSTGRES_DB: ffbb
-    expose:
-      - 5432
+  # database:
+  #   image: postgres
+  #   restart: always
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_PASSWORD: ffbb
+  #     POSTGRES_USER: ffbb
+  #     POSTGRES_DB: ffbb
+  #   expose:
+  #     - 5432

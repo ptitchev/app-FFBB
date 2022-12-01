@@ -1,16 +1,28 @@
-from typing import Optional
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from datetime import datetime
-from .schemas import request
+from datetime import datetime, timedelta
 
-# from .. import Auth
+from sqlalchemy.orm import Session
+
+from .models import models
+from .database import SessionLocal
+from .schemas import request, schemas
+
+
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 app = FastAPI(
     title="App_ffbb",
     description="My description",
     version="0.0.1",
+    docs_url="/doc", redoc_url="/redoc", openapi_url="/openapi.json"
 )
 
 origins = [
@@ -36,6 +48,7 @@ def get_day_of_week():
     return datetime.now().strftime("%A")
 
 
-@app.post("/api/request")
-async def send_to_front(matchRequest: request.MatchRequest):
-    return ""
+@app.post("/api/request", response_model=list[schemas.Match])
+async def send_to_front(match_request: request.MatchRequest, db: Session = Depends(get_db)):
+    return db.query(models.Match).filter(models.Match.jour > (
+        match_request.date - timedelta(days=1), models.Match.jour < (match_request.date + timedelta(days=1)))).all()

@@ -34,22 +34,22 @@ export default function Map(props){
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
 
-        {/* {props.res.map((jcp) => ( <Marker position={[props.lat, props.lng]} icon={icon}>
+        {props.res.map((el) => ( <Marker position={[el.gymnase.lat, el.gymnase.long]} icon={icon}>
           <Popup className="rounded-xl shadow-lg flex flex-col space-y-3">
-            <h1 className='text-lg'>Nom du match</h1>
+            <h1 className='text-lg'>{el.gymnase.nom}</h1>
             <hr/>
             <p className='text-sm'>
               <ul>
-                <li>A vs B</li>
-                <li>à 14h</li>
-                <li>{props.loc}</li>
+                <li>{el.nom_eq_dom} vs {el.nom_eq_ext}</li>
+                <li>à {el.heure}</li>
+                <li>{el.gymnase.ville}</li>
               </ul>
             </p>
           </Popup>
         </Marker>
         ))
-        } */}
-        <Marker position={[props.lat, props.lng]} icon={icon}>
+        }
+        {/* <Marker position={[props.lat, props.lng]} icon={icon}>
           <Popup className="rounded-xl shadow-lg flex flex-col space-y-3">
             <h1 className='text-lg'>Nom du match</h1>
             <hr/>
@@ -61,7 +61,7 @@ export default function Map(props){
               </ul>
             </p>
           </Popup>
-        </Marker>
+        </Marker> */}
       </MapContainer>
       </div>
     );
