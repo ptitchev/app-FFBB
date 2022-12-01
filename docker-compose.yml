@@ -17,14 +17,15 @@ services:
     expose:
       - 3000
 
-  # database:
-  #   image: postgres
-  #   restart: always
-  #   ports:
-  #     - "5432:5432"
-  #   environment:
-  #     POSTGRES_PASSWORD: ffbb
-  #     POSTGRES_USER: ffbb
-  #     POSTGRES_DB: ffbb
-  #   expose:
-  #     - 5432
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PW}
+      - POSTGRES_DB=${POSTGRES_DB} #optional (specify default database instead of $POSTGRES_DB)
+    ports:
+      - "5432:5432"
+    restart: always

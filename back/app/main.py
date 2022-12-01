@@ -49,6 +49,6 @@ def get_day_of_week():
 
 
 @app.post("/api/request", response_model=list[schemas.Match])
-async def send_to_front(match_request: request.MatchRequest, db: Session = Depends(get_db)):
-    return db.query(models.Match).filter(models.Match.jour > (
-        match_request.date - timedelta(days=1), models.Match.jour < (match_request.date + timedelta(days=1)))).all()
+async def send_to_front(match_request: request.MatchRequest, db = Depends(get_db)):
+    # req_match = await match_request.json()
+    return db.query(models.Match).filter(models.Match.jour > match_request.date - timedelta(days=1), models.Match.jour < match_request.date + timedelta(days=1)).all()
