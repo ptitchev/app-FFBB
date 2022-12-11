@@ -52,22 +52,28 @@ const App = () => {
     const sendToBack = async () => {
 
         await getLatLng()
-        const url = "http://127.0.0.1:3001/api/request";
-        const res = await fetch(url, {
-            method: "POST",
-            headers: { 
-                'Content-Type': 'application/json',
-                'accept' : 'application/json',
-            },
-            body: JSON.stringify({
-                date: date,
-                lat: lati,
-                lng: lngi,
-            }),
-        });
+        // const url = "http://127.0.0.1:3001/api/request_post";
+        const url = "http://127.0.0.1:3001/api/request_get?";
+        // const res = await fetch(url, {
+        //     method: "POST",
+        //     headers: { 
+        //         'Content-Type': 'application/json',
+        //         'accept' : 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         date: date,
+        //         lat: lati,
+        //         lng: lngi,
+        //     }),
+        // });
+
+        const res = await fetch(url + new URLSearchParams({
+            date: date,
+        }));
+
 
         setRes(res.json());
-        console.log(res.json());
+        console.log('response :', res.json());
     }
 
     return (

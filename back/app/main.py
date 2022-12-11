@@ -1,6 +1,6 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 from sqlalchemy.orm import Session
 
@@ -16,7 +16,6 @@ def get_db():
         yield db
     finally:
         db.close()
-
 
 app = FastAPI(
     title="App_ffbb",
@@ -39,7 +38,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/api/day", tags=["Dates"])
 def get_day_of_week():
     """
@@ -47,8 +45,20 @@ def get_day_of_week():
     """
     return datetime.now().strftime("%A")
 
+def get_match(db: Session, date: date):
+    """
+    Recupere les matchs dans la base de donnée en fonction du jour
+    """
+    return db.query(models.Match).filter(models.Match.jour > date - timedelta(days=15), models.Match.jour < date + timedelta(days=15)).all()
 
-@app.post("/api/request", response_model=list[schemas.Match])
-async def send_to_front(match_request: request.MatchRequest, db = Depends(get_db)):
-    # req_match = await match_request.json()
-    return db.query(models.Match).filter(models.Match.jour > match_request.date - timedelta(days=1), models.Match.jour < match_request.date + timedelta(days=1)).all()
+
+@app.get("/api/request_get", response_model=schemas.Match)
+async def send_to_front(date: date, db: Session = Depends(get_db)):
+    matchByDate = get_match(db, date)
+    return matchByDate
+
+
+@app.post("/api/request_post", response_model=schemas.Match)
+async def send_to_front(date: request.MatchRequest, db: Session = Depends(get_db)):
+    matchByDate = await get_match(db, date.date)
+    return matchByDate

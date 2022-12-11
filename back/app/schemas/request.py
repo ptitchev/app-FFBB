@@ -1,8 +1,8 @@
-from datetime import datetime
+from datetime import datetime, date
 from pydantic import BaseModel
 
 
 class MatchRequest(BaseModel):
-    date: datetime
+    date: date
     lat: float
     lng: float

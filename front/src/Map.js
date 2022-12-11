@@ -6,9 +6,7 @@ import * as L from 'leaflet';
 export default function Map(props){
   const [mapRef, setMapRef] = useState(null);
 
-  // {props.test}
   useEffect(() => {
-    console.log('test :', mapRef)
     if ( mapRef ){
     mapRef.flyTo({lat : props.lat, lng : props.lng});
     }
@@ -41,8 +39,7 @@ export default function Map(props){
             <p className='text-sm'>
               <ul>
                 <li>{el.nom_eq_dom} vs {el.nom_eq_ext}</li>
-                <li>à {el.heure}</li>
-                <li>{el.gymnase.ville}</li>
+                <li>à {el.gymnase.ville}</li>
               </ul>
             </p>
           </Popup>

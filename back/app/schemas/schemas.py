@@ -1,6 +1,7 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from pydantic import BaseModel
+from typing import Union
 
 
 class Poule(BaseModel):
@@ -36,15 +37,15 @@ class Gymnase(BaseModel):
 
 
 class Match(BaseModel):
-    id: int
-    poule: Poule
-    gymnase: Gymnase
-    nom_eq_dom: str
-    nom_eq_ext: str
-    jour: datetime
-    heure: datetime
-    resultat: str
-    nb_j: str
+    id: Union[int, None] = 25087
+    poule: Union[Poule, None] = {'id': 00, 'nom': 'Betlic Elite'}
+    gymnase: Union[Gymnase, None] = {'id': 34000000916, 'lat': 48.82091, 'long': 2.3682,'nom': 'HALLE CARPENTIER', 'adresse': 'Boulevard Masséna','CP':'75013', 'ville': 'Paris'}
+    nom_eq_dom: Union[str, None] = 'PARIS BASKETBALL'
+    nom_eq_ext: Union[str, None] = 'SASP ESSM LE PORTEL BASKET BALL COTE DOPALE'
+    jour: Union[date, None] = '2022-12-15'
+    heure: Union[datetime, None] = None
+    resultat: Union[str, None] = None
+    nb_j: Union[str, None] = '10'
 
     class Config:
         orm_mode = True
