@@ -1,3 +1,0 @@
-asyncio
-requests-html
-psycopg2-binary
