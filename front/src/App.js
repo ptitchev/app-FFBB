@@ -71,9 +71,9 @@ const App = () => {
             date: date,
         }));
 
-
-        setRes(res.json());
-        console.log('response :', res.json());
+        const res2 = res.clone()
+        setRes(res2.json());
+        console.log('response :', res2.json());
     }
 
     return (
